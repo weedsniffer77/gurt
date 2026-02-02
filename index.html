@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Browser Game</title>
+    <link rel="icon" href="data:,">
+    
+    <!-- CSS Modules -->
+    <link rel="stylesheet" href="ui/css/core.css">
+    <link rel="stylesheet" href="ui/css/hud.css">
+    <link rel="stylesheet" href="ui/css/menus.css">
+    <link rel="stylesheet" href="ui/css/settings.css">
+    <link rel="stylesheet" href="ui/css/loadout.css">
+    <link rel="stylesheet" href="ui/css/perk_icons.css">
+    <link rel="stylesheet" href="ui/css/score_feed.css">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Teko:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body { margin: 0; overflow: hidden; background: #000; }
+        #loading-screen { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: #000; color: #fff; display: flex; justify-content: center; align-items: center; 
+            z-index: 9999; font-family: 'Teko', sans-serif; font-size: 32px; letter-spacing: 2px;
+            transition: opacity 0.5s; pointer-events: none; 
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-screen">LOADING...</div>
+
+    <!-- Canvases -->
+    <canvas id="game-canvas"></canvas>
+    <canvas id="menu-canvas"></canvas>
+
+    <!-- UI IS INJECTED BY SCRIPTS (ui_elements.js, multiplayer_ui.js) -->
+
+    <!-- THREE.JS & RAPIER IMPORT MAP -->
+    <script async src="https://cdn.jsdelivr.net/npm/es-module-shims@1.10.0/dist/es-module-shims.js"></script>
+    <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/",
+        "three-mesh-bvh": "https://unpkg.com/three-mesh-bvh@0.7.3/build/index.module.js",
+        "@dimforge/rapier3d-compat": "https://cdn.jsdelivr.net/npm/@dimforge/rapier3d-compat@0.11.2/+esm"
+      }
+    }
+    </script>
+    
+    <!-- CORE LIBS LOADER -->
+    <script type="module">
+        import * as THREE from 'three';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+        import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+        import { BokehPass } from 'three/addons/postprocessing/BokehPass.js';
+        import { SSAOPass } from 'three/addons/postprocessing/SSAOPass.js';
+        import RAPIER from '@dimforge/rapier3d-compat';
+        
+        import { computeBoundsTree, disposeBoundsTree, acceleratedRaycast } from 'three-mesh-bvh';
+        import * as BufferGeometryUtils from 'three/addons/utils/BufferGeometryUtils.js';
+
+        // Init Rapier WASM
+        await RAPIER.init();
+        window.RAPIER = RAPIER; // Expose globally for legacy scripts
+
+        THREE.BufferGeometry.prototype.computeBoundsTree = computeBoundsTree;
+        THREE.BufferGeometry.prototype.disposeBoundsTree = disposeBoundsTree;
+        THREE.Mesh.prototype.raycast = acceleratedRaycast;
+
+        window.THREE = THREE;
+        window.EffectComposer = EffectComposer;
+        window.RenderPass = RenderPass;
+        window.ShaderPass = ShaderPass;
+        window.UnrealBloomPass = UnrealBloomPass;
+        window.OutputPass = OutputPass;
+        window.BokehPass = BokehPass;
+        window.SSAOPass = SSAOPass;
+        window.BufferGeometryUtils = BufferGeometryUtils;
+        
+        window.CORE_LIBS_LOADED = true;
+    </script>
+
+    <!-- PLAYROOM KIT -->
+    <script src="https://unpkg.com/playroomkit/multiplayer.js"></script>
+
+    <!-- FIREBASE -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <!-- CORE ARCHITECTURE -->
+    <script src="config/constants.js"></script>
+    <script src="core/event_bus.js"></script>
+    <script src="core/world_builder.js"></script>
+    <script src="core/spawn_system.js"></script>
+    <script src="core/physics_engine.js"></script> 
+    <script src="core/entity_manager.js"></script>
+    <script src="gameplay/loot_system.js"></script>
+    
+    <script src="network/connection.js"></script>
+    <script src="network/lobby_service.js"></script>
+    <script src="match/match_timer.js"></script>
+    <script src="match/match_controller.js"></script>
+
+    <!-- GAME SCRIPTS -->
+    <script src="core/loop_controller.js"></script> 
+    <script src="ui/ui_elements.js"></script>
+    <script src="ui/chat_system.js"></script>
+    <script src="core/background_service.js"></script>
+    <script src="core/input_manager.js"></script>
+    <script src="core/asset_loader.js"></script>
+    <script src="player/inventory_controller.js"></script>
+    
+    <!-- Scene & Render -->
+    <script src="core/scene_controller.js"></script>
+    <script src="core/map_optimizer.js"></script>
+    <script src="render/material_library.js"></script>
+    <script src="render/shader/custom_shaders.js"></script>
+    <script src="render/shader/post_effects_library.js"></script>
+    <script src="render/shader/shadow_manager.js"></script>
+    <script src="render/shader/raytracer.js"></script>
+    <script src="render/shader/sky_renderer.js"></script>
+    <script src="render/shader/post_processor.js"></script>
+    <script src="visuals/menu_renderer.js"></script>
+    <script src="render/gun_animator.js"></script>
+    
+    <script src="render/gun_attachment_system.js"></script>
+    <script src="render/gun_fx_system.js"></script>
+    <script src="render/gun_renderer.js"></script>
+    
+    <script src="data/game_data.js"></script>
+    <script src="data/score_events.js"></script>
+    <script src="data/common_parts.js"></script>
+    <script src="data/effects/particles.js"></script>
+    <script src="visuals/vfx_config.js"></script>
+    
+    <script src="core/stat_system.js"></script>
+    <script src="core/loadout_manager.js"></script>
+    <script src="core/scorestreak_manager.js"></script>
+    <script src="core/score_system.js"></script>
+    <script src="ui/menus/loadout_stats.js"></script>
+    
+    <!-- SPLIT: Loadout UI -->
+    <script src="ui/menus/loadout/editor_state.js"></script>
+    <script src="ui/menus/loadout/components.js"></script>
+    
+    <script src="ui/menus/loadout_view.js"></script>
+    <script src="ui/menus/loadout_scene.js"></script>
+    <script src="ui/menus/loadout_ui.js"></script>
+    
+    <script src="ui/scoreboard_manager.js"></script>
+    <script src="ui/settings_manager.js"></script>
+    <script src="core/ui_manager.js"></script>
+    
+    <!-- Data Loaders -->
+    <script src="data/weapon_registry.js"></script>
+    <script src="data/throwable_registry.js"></script>
+    <script src="data/scorestreak_registry.js"></script>
+    <script src="data/map_registry.js"></script>
+    <script src="data/player/player_model.js"></script>
+    
+    <script src="gamemodes/team_manager.js"></script>
+    <script src="gamemodes/match_state.js"></script>
+    
+    <!-- SPLIT: Player Logic -->
+    <script src="player/modules/player_health.js"></script>
+    <script src="player/modules/player_ammo.js"></script>
+    <script src="player/player_state.js"></script>
+    
+    <script src="player/physics_controller.js"></script>
+    <script src="player/character_controller.js"></script>
+    <script src="player/player_camera.js"></script>
+    <script src="player/death_camera_controller.js"></script>
+    
+    <!-- SPLIT: Visuals -->
+    <script src="visuals/particles_core.js"></script>
+    <script src="visuals/particles_vfx.js"></script>
+    <script src="visuals/particle_manager.js"></script>
+    <script src="visuals/ragdoll_manager.js"></script>
+    <script src="visuals/loot_visuals.js"></script>
+    
+    <script src="weapons/ballistics.js"></script>
+    
+    <!-- INPUT HANDLERS (New) -->
+    <script src="input/drone_input_handler.js"></script>
+    <script src="weapons/weapon_input_handler.js"></script>
+    
+    <script src="weapons/weapon_manager.js"></script>
+    <script src="weapons/throwable_manager.js"></script>
+    <script src="weapons/projectile_manager.js"></script>
+    
+    <script src="ui/hud/basic_hud.js"></script>
+    <script src="ui/hud/shotgun_hud.js"></script>
+    <script src="ui/hud/rifle_hud.js"></script>
+    <script src="ui/hud/rpg_hud.js"></script>
+    <script src="ui/hud/right_side_hud.js"></script>
+    <script src="ui/hud/hud_manager.js"></script>
+    <script src="data/perks.js"></script>
+    <script src="data/perk_behaviors.js"></script>
+    
+    <script src="ui/prematch/team_selector.js"></script>
+    
+    <script src="ui/nametag_system.js"></script>
+    <script src="ui/hitmarker_system.js"></script>
+    <script src="ui/damage_indicator.js"></script>
+    <script src="ui/deployment_screen.js"></script>
+    <script src="ui/killfeed.js"></script>
+    <script src="ui/score_feed_ui.js"></script>
+    <script src="ui/ammo_feed_ui.js"></script> 
+    
+    <!-- SPLIT: Multiplayer Animation -->
+    <script src="multiplayer/firebase_manager.js"></script> 
+    
+    <!-- Networking Split -->
+    <script src="multiplayer/network_state.js"></script>
+    <script src="multiplayer/network_event_handler.js"></script>
+    <script src="multiplayer/playroom_manager.js"></script> 
+    
+    <!-- Animation Split -->
+    <script src="multiplayer/animator_ik.js"></script>
+    <script src="multiplayer/animator_poses.js"></script>
+    <script src="multiplayer/remote_player_animator.js"></script>
+    
+    <script src="multiplayer/remote_player_visuals.js"></script>
+    <script src="multiplayer/remote_player.js"></script>
+    <script src="multiplayer/remote_player_manager.js"></script>
+    <script src="multiplayer/multiplayer_ui.js"></script>
+    
+    <!-- ASSETS SPLIT -->
+    <script src="data/assets/asset_manager.js"></script>
+    <script src="data/assets/container_assets.js"></script>
+    <script src="data/assets/structure_assets.js"></script>
+    <script src="data/assets/prop_assets.js"></script>
+    <script src="data/map_assets.js"></script> <!-- Legacy Wrapper -->
+    
+    <!-- SPLIT: Core Game Manager -->
+    <script src="core/game_setup.js"></script>
+    <script src="core/game_flow.js"></script>
+    <script src="core/game_manager.js"></script>
+    
+    <!-- DRONE PHYSICS SPLIT -->
+    <script src="gameplay/drone_physics.js"></script>
+
+    <!-- PATCH TEST -->
+    <script src="core/rpg_fix.js"></script>
+
+    <!-- SIMPLE BOOT SEQUENCE -->
+    <script>
+        function attemptStart() {
+            // 1. Check Libraries
+            if (!window.CORE_LIBS_LOADED || !window.THREE || !window.RAPIER) {
+                setTimeout(attemptStart, 100);
+                return;
+            }
+            
+            // 2. Check Game Manager
+            if (!window.TacticalShooter || !window.TacticalShooter.GameManager) {
+                setTimeout(attemptStart, 100);
+                return;
+            }
+            
+            // 3. Start
+            console.log("Boot: Starting Game Manager...");
+            window.TacticalShooter.GameManager.init();
+        }
+        
+        window.addEventListener('load', attemptStart);
+    </script>
+</body>
+</html>
