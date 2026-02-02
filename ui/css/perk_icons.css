@@ -1,0 +1,234 @@
+
+/* PERK ICONS - Pure CSS Shapes */
+.perk-icon-display {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    transform: scale(0.8); 
+    flex-shrink: 0; 
+}
+
+/* SHARED: Cartridge Shape */
+.css-bullet-cartridge {
+    width: 5px;
+    height: 20px;
+    background: #eec; 
+    border: 1px solid #000;
+    clip-path: polygon(
+        10% 100%, 90% 100%,     /* Base */
+        90% 40%,                /* Shoulder Start */
+        65% 30%,                /* Neck Start */
+        65% 15%,                /* Neck */
+        50% 0%,                 /* Tip */
+        35% 15%,                /* Neck */
+        35% 30%,                /* Neck Start */
+        10% 40%                 /* Shoulder Start */
+    );
+    box-shadow: 0 0 2px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+}
+
+/* 1. DAMAGE (Single Tilted Bullet) */
+.icon-damage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotate(45deg);
+}
+.icon-damage .css-bullet-cartridge {
+    width: 8px; height: 26px; /* Larger for single */
+    background: #fff; 
+    border: none;
+    box-shadow: none;
+}
+
+/* 2. BANDOLIER & AKIMBO (Row of 3) */
+.icon-bandolier {
+    display: flex;
+    gap: 2px;
+    align-items: center; 
+    justify-content: center;
+    width: 100%;
+}
+.icon-bandolier .css-bullet-cartridge {
+    background: #fff;
+    border: none;
+    box-shadow: none;
+}
+
+/* 3. EXPLOSION (Frag Grenade) */
+.icon-frag-body {
+    width: 18px;
+    height: 24px;
+    background: #fff;
+    border-radius: 40% 40% 45% 45%;
+    position: relative;
+}
+.icon-frag-body::before {
+    content: '';
+    position: absolute;
+    top: -4px; left: 4px;
+    width: 10px; height: 6px;
+    background: #fff; 
+}
+.icon-frag-body::after {
+    content: '';
+    position: absolute;
+    top: -4px; right: -4px;
+    width: 4px; height: 12px;
+    background: #fff; 
+    transform: rotate(15deg);
+}
+
+/* 4. ARROWS (Chevrons - Clean V shape) */
+.css-chevron {
+    width: 10px;
+    height: 10px;
+    border-right: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    transform: rotate(45deg);
+    margin: -2px; 
+}
+
+/* JUMP (Vertical Double Chevrons) */
+.icon-jump {
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: center;
+    justify-content: center;
+}
+.icon-jump .css-chevron {
+    transform: rotate(-135deg); /* Point Up */
+}
+
+/* SPEED (Horizontal Double Chevrons) */
+.icon-speed {
+    display: flex;
+    flex-direction: row;
+    gap: 0px;
+    align-items: center;
+    justify-content: center;
+}
+.icon-speed .css-chevron {
+    transform: rotate(-45deg); /* Point Right */
+}
+
+
+/* 6. SHIELD (SVG Container) */
+.icon-shield {
+    width: 22px; 
+    height: 26px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+}
+.icon-shield svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.5));
+}
+
+
+/* 7. EYE (Geometric Alignment) */
+.icon-eye {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.eye-shape {
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 0 100%; 
+    transform: rotate(-45deg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.eye-pupil {
+    width: 8px;
+    height: 8px;
+    background: #000;
+    border-radius: 50%;
+}
+
+
+/* 8. RECYCLE (Circle with Arrows) */
+.icon-recycle {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.recycle-loop {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    border-top-color: transparent; /* Gap */
+    border-left-color: transparent; /* Another Gap for style */
+    position: relative;
+    transform: rotate(-45deg);
+}
+
+.arrow-tip {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent; 
+    border-right: 4px solid transparent; 
+    border-bottom: 8px solid #fff;       
+    position: absolute;
+}
+
+/* Tip 1 */
+.tip-1 {
+    top: -4px;
+    right: -2px;
+    transform: rotate(60deg);
+}
+
+/* Tip 2 */
+.tip-2 {
+    bottom: -2px;
+    left: -2px;
+    transform: rotate(240deg);
+}
+
+
+/* 9. HEALTH (Square Aspect Locked) */
+.icon-heal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    min-width: 24px; 
+    min-height: 24px;
+}
+.heal-cross {
+    background: #fff;
+    width: 100%;
+    height: 100%;
+    clip-path: polygon(
+        35% 0%, 65% 0%, 
+        65% 35%, 100% 35%, 
+        100% 65%, 65% 65%, 
+        65% 100%, 35% 100%, 
+        35% 65%, 0% 65%, 
+        0% 35%, 35% 35%
+    );
+}

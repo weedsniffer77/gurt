@@ -1,0 +1,54 @@
+
+.settings-panel { width: 900px; height: 600px; background: #0a0a0a; border: 1px solid #333; display: flex; flex-direction: column; }
+.settings-header { display: flex; background: #111; padding: 10px; gap: 10px; border-bottom: 1px solid #333; }
+.back-arrow { padding: 10px 20px; background: #222; cursor: none; color: #fff; font-weight: bold; }
+.back-arrow:hover { background: #333; }
+.settings-tabs { display: flex; flex: 1; gap: 2px; }
+.tab-btn { background: #151515; border: none; color: #888; padding: 10px 20px; font-family: 'Rajdhani', sans-serif; font-weight: bold; cursor: none; transition: 0.2s; flex: 1; min-width: 80px; }
+.tab-btn:hover { color: #fff; background: #222; }
+.tab-btn.active { background: #555555; color: #fff; } 
+.reset-settings-btn { background: #311; color: #f88; border: 1px solid #522; font-family: 'Rajdhani', sans-serif; font-weight: bold; cursor: none; padding: 0 15px; }
+.reset-settings-btn:hover { background: #522; color: #fff; }
+.settings-content { flex: 1; padding: 20px; overflow-y: hidden; position: relative; } 
+.tab-content { display: none; height: 100%; }
+.tab-content.active { display: block; }
+.split-view { display: flex; gap: 20px; height: 100%; }
+.split-left, .split-right { flex: 1; overflow-y: auto; padding-right: 5px; } 
+.split-divider { width: 1px; background: #333; }
+.control-group { display: flex; flex-direction: column; margin-bottom: 4px; background: rgba(255,255,255,0.02); padding: 8px 12px; border: 1px solid transparent; }
+.control-group:hover { border-color: #333; background: rgba(255,255,255,0.04); }
+.control-group.toggle-row { flex-direction: row; justify-content: space-between; align-items: center; min-height: 44px; }
+.control-group.slider-container { gap: 8px; }
+.slider-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.setting-label { color: #aaa; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; }
+.setting-value { color: #fff; font-size: 14px; }
+.slider { -webkit-appearance: none; width: 100%; height: 4px; background: #333; outline: none; cursor: none; margin-top: 2px; }
+.slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; background: #555555; cursor: none; border: 1px solid #000; }
+.toggle-switch { position: relative; display: block; width: 44px; height: 22px; flex-shrink: 0; cursor: none; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; cursor: none; top: 0; left: 0; right: 0; bottom: 0; background-color: #111; transition: .2s; border: 1px solid #444; }
+.toggle-slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: #666; transition: .2s; }
+input:checked + .toggle-slider { background-color: #555555; border-color: #777; } 
+input:checked + .toggle-slider:before { transform: translateX(22px); background-color: #fff; }
+.keybinds-header { font-family: 'Rajdhani', sans-serif; color: #aaa; font-size: 14px; letter-spacing: 1px; font-weight: 600; text-transform: uppercase; margin-bottom: 10px; border-bottom: 1px solid #444; padding-bottom: 5px; }
+.keybinds-container { display: flex; flex-direction: column; gap: 3px; height: 100%; overflow-y: visible; } 
+.keybind-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 8px; background: rgba(0,0,0,0.3); border-left: 2px solid transparent; }
+.keybind-row:hover { background: rgba(255,255,255,0.05); border-left-color: #555555; }
+.keybind-label { font-size: 14px; color: #ccc; }
+.keybind-btn { background: #222; border: 1px solid #444; color: #fff; padding: 4px 8px; font-family: monospace; font-size: 12px; cursor: none; min-width: 70px; text-align: center; }
+.keybind-btn:hover { border-color: #666; background: #333; }
+.keybind-btn.listening { background: #555555; border-color: #888; color: #fff; animation: pulse 1s infinite; }
+.keybind-btn.unbound { color: #f55; border-color: #522; }
+.delete-bind-btn { background: none; border: none; color: #666; font-weight: bold; cursor: none; margin-left: 5px; padding: 0 5px; }
+.delete-bind-btn:hover { color: #f55; }
+.presets-row { display: flex; gap: 5px; margin-bottom: 15px; }
+.preset-btn { background: #222; border: 1px solid #444; color: #aaa; padding: 8px 5px; flex: 1; font-family: 'Rajdhani', sans-serif; font-size: 14px; text-transform: uppercase; cursor: none; transition: all 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.preset-btn:hover { background: #333; color: #fff; border-color: #666; }
+
+.settings-footer { border-top: 1px solid #333; padding: 15px 20px; background: #111; display: flex; justify-content: space-between; align-items: center; }
+.config-io-container { display: flex; gap: 10px; flex: 1; margin-right: 40px; }
+#config-string { background: #000; border: 1px solid #333; color: #666; padding: 8px; flex: 1; font-family: monospace; font-size: 11px; }
+.footer-btn { background: #222; color: #ccc; border: 1px solid #444; padding: 8px 20px; font-family: 'Rajdhani', sans-serif; font-weight: bold; cursor: none; }
+.footer-btn:hover { background: #333; color: #fff; }
+.save-btn { background: #555555; border-color: #777; color: #fff; } 
+.save-btn:hover { background: #666666; }

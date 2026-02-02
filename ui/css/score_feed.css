@@ -1,0 +1,78 @@
+
+/* js/ui/css/score_feed.css */
+
+#score-feed-container {
+    position: fixed;
+    top: 55%; 
+    left: 55%; /* Right of Crosshair */
+    width: 250px;
+    height: 300px;
+    pointer-events: none;
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    gap: 0px; /* Tighter gap */
+}
+
+/* The Main Score Entry (e.g. +150) */
+.score-entry-main {
+    font-family: 'Teko', sans-serif;
+    font-size: 32px; 
+    font-weight: 600;
+    color: #ffcc00; /* Gold */
+    text-shadow: 0 0 5px rgba(255, 170, 0, 0.6);
+    line-height: 1;
+    letter-spacing: 1px;
+    opacity: 0;
+    transform: translateX(10px);
+    /* Animation applied via class now */
+}
+
+.score-flash-anim {
+    animation: scoreSlideIn 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* Sub-text under the score (e.g. KILL, HEADSHOT) */
+.score-entry-sub {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px; 
+    font-weight: 700;
+    color: #eeeeee;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateX(5px);
+    margin-top: -2px; 
+    margin-bottom: 2px;
+}
+
+.sub-slide-anim {
+    animation: subSlideIn 0.3s 0.05s ease-out forwards;
+}
+
+/* Specific Event Colors */
+.score-color-kill { color: #ffcc00; } /* Gold */
+.score-color-assist { color: #ffffff; } /* White */
+.score-color-bonus { color: #ffaa44; } /* Orange */
+
+/* Glow Animation */
+@keyframes scoreSlideIn {
+    0% { opacity: 0; transform: translateX(20px) scale(0.8); }
+    100% { opacity: 1; transform: translateX(0) scale(1.0); }
+}
+
+@keyframes subSlideIn {
+    0% { opacity: 0; transform: translateX(10px); }
+    100% { opacity: 0.9; transform: translateX(0); }
+}
+
+/* Fade Out Class applied by JS */
+.score-fade-out {
+    animation: scoreFadeOut 0.2s ease-in forwards;
+}
+
+@keyframes scoreFadeOut {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-10px); }
+}
