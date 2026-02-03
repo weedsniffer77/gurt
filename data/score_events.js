@@ -32,7 +32,7 @@
         BULLSEYE: { score: 50, label: "BULLSEYE" }, 
         NO_SCOPE: { score: 25, label: "NO SCOPE" },
         SURVIVOR: { score: 50, label: "SURVIVOR" }, 
-        MARTYRDOM: { score: 25, label: "MARTYRDOM" }, 
+        MARTYRDOM: { score: 25, label: "IDK" }, 
         HUMILIATION: { score: 100, label: "HUMILIATION" },
         SUICIDE_BOMBER: { score: 100, label: "SUICIDE BOMBER" }, 
         
@@ -40,7 +40,7 @@
         FIRST_BLOOD: { score: 100, label: "FIRST BLOOD" },
         BUZZKILL: { score: 100, label: "BUZZKILL" },
         RAMPAGE: { score: 150, label: "RAMPAGE" }, 
-        KINGSLAYER: { score: 50, label: "KINGSLAYER" },
+        KINGSLAYER: { score: 50, label: "67" },
         PAYBACK: { score: 25, label: "PAYBACK" },
         AVENGER: { score: 25, label: "AVENGER" },
         
